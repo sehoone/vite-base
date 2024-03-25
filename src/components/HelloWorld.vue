@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 
 defineProps({
@@ -9,8 +9,8 @@ const count = ref(0)
 const increment = () => {
   count.value++;
 };
-</script>
 
+</script>
 <template>
   <div>
   <h1>{{ msg }}</h1>
