@@ -10,9 +10,15 @@
   },
   "dependencies": {
     "eslint": "^8.57.0",
-    "vue": "^3.4.21"
+    "loglevel": "^1.9.1",
+    "pinia": "^2.1.7",
+    "typescript": "^5.4.3",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "vuetify": "^3.5.12"
   },
   "devDependencies": {
+    "@types/node": "^20.11.30",
     "@types/webpack-env": "^1.18.4",
     "@vitejs/plugin-vue": "^5.0.4",
     "vite": "^5.1.6"
