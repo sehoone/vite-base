@@ -1,0 +1,15 @@
+{
+    "auth": {
+        "head": {
+          "resultCode": 0,
+          "resultMessage": "OK"
+        },
+        "body": {
+          "userId": "test",
+          "name": "관리자",
+          "lv": 1,
+          "token": "369369369veryveryhardkey3696369veryveryhardkey36369369369veryveryhardkey369"
+        }
+      }
+
+}

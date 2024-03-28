@@ -32,5 +32,5 @@
     "allowJs": true
   },
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
-  "exclude": ["node_modules", "src/assets", "src/jsonserver/dummy"]
+  "exclude": ["node_modules", "src/assets", "src/jsonserver"]
 }

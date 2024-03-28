@@ -132,6 +132,7 @@ export class BaseAxios {
             try {
               // 2-1 axois request 성공 후 처리(응답 데이터 처리 및 실패 응답처리)
               const ret = transformRequestHook(res, opt);
+              console.log('ret', ret);
               resolve(ret);
             } catch (err) {
               reject(err || new Error('request error!'));

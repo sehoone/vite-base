@@ -2,9 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
 
 import sample from '@/router/routes/sample';
-// import routerMembers from '@/router/route/members.router'
-// import routerPosts from '@/router/route/posts.router'
-// import { setupRouterGuard } from '@/router/guard.config'
 
 const routes: RouteRecordRaw[] = [
   sample,

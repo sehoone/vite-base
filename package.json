@@ -4,14 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 5100",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "jsonserve": "json-server --watch ./src/jsonserver/dummy/demoApi.cjs --port 5199"
+    "jsonserve": "node src/jsonserver/server.cjs"
   },
   "dependencies": {
     "@types/lodash-es": "^4.17.12",

@@ -9,6 +9,8 @@ const PropsParent = async (): Promise<typeof import('*.vue')> =>
   await import(/* webpackChunkName: "sample" */ '@/views/sample/PropsParent.vue');
 const EmitsParent = async (): Promise<typeof import('*.vue')> =>
   await import(/* webpackChunkName: "sample" */ '@/views/sample/EmitsParent.vue');
+const LoginPage = async (): Promise<typeof import('*.vue')> =>
+  await import(/* webpackChunkName: "sample" */ '@/views/sample/LoginPage.vue');
 
 export default {
   path: '/sample',
@@ -42,6 +44,14 @@ export default {
       component: EmitsParent,
       meta: {
         title: 'emitsParent'
+      }
+    },
+
+    {
+      path: '/sample/loginPage',
+      component: LoginPage,
+      meta: {
+        title: 'loginPage'
       }
     }
   ]
