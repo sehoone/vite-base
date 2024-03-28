@@ -1,10 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer
-      v-model="drawer"
-      
-      app
-    >
+    <v-navigation-drawer v-model="drawer" app>
       <v-list dense>
         <template v-for="item in items">
           <v-list-group
@@ -47,11 +43,7 @@
         </template>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      app
-      color="blue darken-3"
-      dark
-    >
+    <v-app-bar app color="blue darken-3" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
         <span class="hidden-sm-and-down">Sample Contacts</span>
@@ -74,10 +66,7 @@
       </v-btn>-->
       <v-btn icon large>
         <v-avatar size="32px" item>
-          <v-img
-            src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-            alt="Vuetify"
-          ></v-img
+          <v-img src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify"></v-img
         ></v-avatar>
       </v-btn>
     </v-app-bar>
@@ -85,97 +74,95 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router'
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+// const route = useRoute();
 
-const dialog = ref(false);
+// const dialog = ref(false);
 const drawer = ref(false);
 const items = ref([
+  {
+    icon: 'mdi-contacts',
+    text: 'HelloWorld',
+    link: '/sample/helloworld'
+  },
+  {
+    icon: 'mdi-history',
+    text: 'HelloWorld2',
+    link: '/sample/helloworld2'
+  },
+  {
+    icon: 'mdi-chevron-up',
+    'icon-alt': 'mdi-chevron-down',
+    text: 'Composition',
+    model: false,
+    link: '',
+    children: [
       {
-        icon: 'mdi-contacts',
-        text: 'HelloWorld',
-        link: '/sample/helloworld',
+        icon: 'mdi-content-copy',
+        text: 'reactive',
+        link: '/sample/composition/reactive'
       },
       {
-        icon: 'mdi-history',
-        text: 'HelloWorld2',
-        link: '/sample/helloworld2',
+        icon: 'mdi-content-copy',
+        text: 'computed',
+        link: '/sample/composition/computed'
       },
       {
-        icon: 'mdi-chevron-up',
-        'icon-alt': 'mdi-chevron-down',
-        text: 'Composition',
-        model: false,
-        link: '',
-        children: [
-          {
-            icon: 'mdi-content-copy',
-            text: 'reactive',
-            link: '/sample/composition/reactive',
-          },
-          {
-            icon: 'mdi-content-copy',
-            text: 'computed',
-            link: '/sample/composition/computed',
-          },
-          {
-            icon: 'mdi-content-copy',
-            text: 'props',
-            link: '/sample/composition/propsParent',
-          },
-          {
-            icon: 'mdi-content-copy',
-            text: 'emits',
-            link: '/sample/composition/emitsParent',
-          },
-        ],
+        icon: 'mdi-content-copy',
+        text: 'props',
+        link: '/sample/composition/propsParent'
       },
       {
-        icon: 'mdi-chevron-up',
-        'icon-alt': 'mdi-chevron-down',
-        text: 'More',
-        model: false,
-        link: '',
-        children: [
-          { icon: 'mdi-plus', text: 'Import', link: '' },
-          { icon: 'mdi-plus', text: 'Export', link: '' },
-          { icon: 'mdi-plus', text: 'Print', link: '' },
-          {
-            icon: 'mdi-plus',
-            text: 'Undo changes',
-            link: '',
-          },
-          {
-            icon: 'mdi-plus',
-            text: 'Other contacts',
-            link: '',
-          },
-        ],
-      },
-      { icon: 'mdi-cog', text: 'Settings', link: '' },
+        icon: 'mdi-content-copy',
+        text: 'emits',
+        link: '/sample/composition/emitsParent'
+      }
+    ]
+  },
+  {
+    icon: 'mdi-chevron-up',
+    'icon-alt': 'mdi-chevron-down',
+    text: 'More',
+    model: false,
+    link: '',
+    children: [
+      { icon: 'mdi-plus', text: 'Import', link: '' },
+      { icon: 'mdi-plus', text: 'Export', link: '' },
+      { icon: 'mdi-plus', text: 'Print', link: '' },
       {
-        icon: 'mdi-message',
-        text: 'Send feedback',
-        link: '',
+        icon: 'mdi-plus',
+        text: 'Undo changes',
+        link: ''
       },
-      { icon: 'mdi-help-circle', text: 'Help', link: '' },
-    ]);
+      {
+        icon: 'mdi-plus',
+        text: 'Other contacts',
+        link: ''
+      }
+    ]
+  },
+  { icon: 'mdi-cog', text: 'Settings', link: '' },
+  {
+    icon: 'mdi-message',
+    text: 'Send feedback',
+    link: ''
+  },
+  { icon: 'mdi-help-circle', text: 'Help', link: '' }
+]);
 
-
-    function clickGotoLink(link: string) {
-      console.log('clickGotoLink ' + link);
-      void router.push({
-        path: link,
-        // query: { ...route.query }
-      })
-      // if (link !== '' && this.$route.path !== link) {
-      //   this.$router.push(link);
-      // }
-    }
-  
+function clickGotoLink(link: string) {
+  console.log('clickGotoLink ' + link);
+  void router.push({
+    path: link
+    // query: { ...route.query }
+  });
+  // if (link !== '' && this.$route.path !== link) {
+  //   this.$router.push(link);
+  // }
+}
 </script>
 
 <script lang="ts">
@@ -183,5 +170,5 @@ export default {
   name: 'navigationLayout',
   inheritAttrs: false,
   customOptions: {}
-}
+};
 </script>

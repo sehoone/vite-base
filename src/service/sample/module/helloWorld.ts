@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { HellowModel } from '@/service/sample/model/helloWorldModel';
+import type { HellowModel } from '@/service/sample/model/helloWorldModel';
 import { getHellowText } from '@/service/sample/api/helloWorld';
 
 interface HelloWorldState {
@@ -9,12 +9,12 @@ interface HelloWorldState {
 export const useHelloWorldStore = defineStore({
   id: 'app-hello-world',
   state: (): HelloWorldState => ({
-    helloText: '',
+    helloText: ''
   }),
   getters: {
     getHelloText(): string {
       return this.helloText || '';
-    },
+    }
   },
   actions: {
     setHelloText(helloText: string) {
@@ -34,8 +34,8 @@ export const useHelloWorldStore = defineStore({
       } catch (error) {
         return Promise.reject(error);
       }
-    },
-  },
+    }
+  }
 });
 
 // Need to be used outside the setup

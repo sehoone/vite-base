@@ -8,7 +8,7 @@ const logger = {
   debug: log.debug,
   info: log.info,
   error: log.error,
-  warn: log.warn,
+  warn: log.warn
 };
 
 export { logger };

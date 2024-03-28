@@ -1,1 +1,1 @@
-declare module 'vue3-tabs'
+declare module 'vue3-tabs';

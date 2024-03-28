@@ -1,8 +1,8 @@
 import { defHttp, defHttpOpt } from '@/utils/http/axios';
-import { HellowModel } from '@/service/sample/helloworld/model/helloWorldModel';
+import type { HellowModel } from '@/service/sample/model/helloWorldModel';
 
 enum Api {
-  GetHellowWorld = '/sample/hello',
+  GetHellowWorld = '/sample/hello'
 }
 
 /**
@@ -18,6 +18,6 @@ export const getHellowText = (): Promise<HellowModel> => {
  */
 export const getHellowTextOpt = (): Promise<HellowModel> => {
   return defHttpOpt({ timeout: 200 * 1000 }).get<HellowModel>({
-    url: Api.GetHellowWorld,
+    url: Api.GetHellowWorld
   });
 };

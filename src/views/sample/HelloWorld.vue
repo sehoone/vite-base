@@ -9,32 +9,30 @@
 
 <script setup lang="ts">
 import { logger } from '@/utils/logger';
-import { useHelloWorldStore } from '@/service/sample/module/helloWorld'
+import { useHelloWorldStore } from '@/service/sample/module/helloWorld';
 import { ref } from 'vue';
 
 const helloWorldStore = useHelloWorldStore();
 
-    let helloworldText1 = ref('');
+let helloworldText1 = ref('');
 
-    async function haldleHelloText() {
-      logger.debug('log test debug');
-      logger.error('log test error');
-      logger.warn('log test warn');
-      logger.info('log test info');
-      console.warn('console test warn');
-      console.error('console test error');
+async function haldleHelloText() {
+  logger.debug('log test debug');
+  logger.error('log test error');
+  logger.warn('log test warn');
+  logger.info('log test info');
+  console.warn('console test warn');
+  console.error('console test error');
 
-      const data = await helloWorldStore.reqHelloText();
-      console.log('haldleHelloText data' + helloWorldStore.getHelloText);
-      helloworldText1.value = data.helloText;
-    }
-
-
+  const data = await helloWorldStore.reqHelloText();
+  console.log('haldleHelloText data' + helloWorldStore.getHelloText);
+  helloworldText1.value = data.helloText;
+}
 </script>
 <script lang="ts">
 export default {
   name: 'helloworld',
   inheritAttrs: false,
   customOptions: {}
-}
+};
 </script>

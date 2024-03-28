@@ -20,32 +20,32 @@
 </template>
 
 <script setup lang="ts">
-  import { reactive, computed, ref } from "vue";
-  import EmitsChild from "@/views/sample/EmitsChild.vue";
-  import { logger } from "@/utils/logger";
+import { reactive, computed, ref } from 'vue';
+import EmitsChild from '@/views/sample/EmitsChild.vue';
+import { logger } from '@/utils/logger';
 
-  let person1 = reactive({
-    name: "sehoone1",
-    age: 33,
-    computedNameLength: computed((): number => person1.name.length), // computed예시.
-  });
+let person1 = reactive({
+  name: 'sehoone1',
+  age: 33,
+  computedNameLength: computed((): number => person1.name.length) // computed예시.
+});
 
-  let isCalledMethodPrev = ref(false);
-  let isCalledMethodNext = ref(false);
-  const handleStepPrev = () => {
-    logger.debug("call handleStepPrev");
-    isCalledMethodPrev.value = !isCalledMethodPrev.value;
-  };
-  const handleStepNext = () => {
-    logger.debug("call handleStepPrev");
-    isCalledMethodNext.value = !isCalledMethodNext.value;
-  };
+let isCalledMethodPrev = ref(false);
+let isCalledMethodNext = ref(false);
+const handleStepPrev = () => {
+  logger.debug('call handleStepPrev');
+  isCalledMethodPrev.value = !isCalledMethodPrev.value;
+};
+const handleStepNext = () => {
+  logger.debug('call handleStepPrev');
+  isCalledMethodNext.value = !isCalledMethodNext.value;
+};
 </script>
 
 <script lang="ts">
-  export default {
-    name: "sampleEmitsParent",
-    inheritAttrs: false,
-    customOptions: {},
-  };
+export default {
+  name: 'sampleEmitsParent',
+  inheritAttrs: false,
+  customOptions: {}
+};
 </script>

@@ -1,1 +1,1 @@
-declare module '@vue-a11y/focus-loop'
+declare module '@vue-a11y/focus-loop';
