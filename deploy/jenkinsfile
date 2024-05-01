@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'node' // 'node'는 Jenkins에서 설정한 Node.js의 이름.
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+              // TODO 형상관리 도구(Git, SVN 등)를 사용하여 소스코드를 체크아웃
+              git 'https://github.com/your-username/your-vuejs-repo.git'
+            }
+        }
+
+        stage('Install') {
+            steps {
+                sh 'pnpm install'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'pnpm run build'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // 배포 스크립트를 실행합니다. 이 부분은 실제 배포 환경에 따라 설정
+                sh 'cp -r dist/* /var/www/html'
+            }
+        }
+    }
+}
