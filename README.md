@@ -3,7 +3,7 @@
 
 ### 1. 기본 구성 환경 
 - node v20.11.1
-- npm 10.2.4
+- pnpm 9.0.6
 - vite 5.1.6
 - vue 3.4.21
 - eslint 8.49.0
@@ -23,7 +23,7 @@
 ### 3. 설치
 ```sh
 cd vite-base
-npm install
+pnpm install
 
 ```
 
@@ -51,7 +51,7 @@ npm install
 ### 5. 서버실행
 - Front Server
 ```sh
-npm run dev
+pnpm run dev
 ```
 
 ### 6. Source Structure
