@@ -23,7 +23,7 @@ pipeline {
         stage('Build') {
             steps {
                 // vue build
-                sh 'pnpm run build'
+                sh 'pnpm build-only'
                 // dist 디렉토리 내부의 파일 목록을 filelist.txt에 저장. deploy 할때 해당 파일만 남기고 삭제하기위함
                 sh 'ls dist/ > dist/filelist.txt'
                 // 빌드 결과물 tar로 압축. -C 를 사용하여 dist 디렉토리 내부의 파일만 압축
