@@ -2,10 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
 
 import sample from '@/router/routes/sample';
+import transition from '@/router/routes/transition';
 const NotfoundView = () => import('@/views/sample/NotFoundView.vue');
 
 const routes: Array<RouteRecordRaw> = [
   sample,
+  transition,
   // routerMembers,
   // routerPosts,
   {

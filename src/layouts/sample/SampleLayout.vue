@@ -20,10 +20,9 @@ import SampleAppBarLayout from './SampleAppBarLayout.vue';
 .slide-leave-active {
   transition: transform 0.5s;
 }
-.slide-enter {
-  transform: translateX(100%);
-}
+
+.slide-enter,
 .slide-leave-to {
-  transform: translateX(-100%);
+  transform: translateX(100%);
 }
 </style>

@@ -1,19 +1,21 @@
 <template>
-  <v-app-bar color="primary">
-    <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"> </v-app-bar-nav-icon>
+  <div>
+    <v-app-bar color="primary">
+      <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"> </v-app-bar-nav-icon>
 
-    <v-app-bar-title> sample page <v-icon @click="handleBack">mdi-arrow-left</v-icon></v-app-bar-title>
-  </v-app-bar>
+      <v-app-bar-title> sample page <v-icon @click="handleBack">mdi-arrow-left</v-icon></v-app-bar-title>
+    </v-app-bar>
 
-  <v-navigation-drawer v-model="drawer">
-    <v-list>
-      <v-list-item v-for="(item, i) in items" :key="i" link @click="clickGotoLink(item.link)">
-        <v-list-item-title>
-          {{ item.text }}
-        </v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-navigation-drawer>
+    <v-navigation-drawer v-model="drawer">
+      <v-list>
+        <v-list-item v-for="(item, i) in items" :key="i" link @click="clickGotoLink(item.link)">
+          <v-list-item-title>
+            {{ item.text }}
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </div>
 </template>
 
 <script setup lang="ts">
