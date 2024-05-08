@@ -21,19 +21,13 @@ export interface RequestOptions {
   errorMessageMode?: ErrorMessageMode;
   // Whether to add a timestamp
   joinTime?: boolean;
-  ignoreCancelToken?: boolean;
   // Whether to send token in header
   withToken?: boolean;
 }
 
-// API response HEAD. http의 header가 아님. request 의 성공/실패코드 및 메세지
-export interface head {
-  resultCode: string;
-  resultMessage: string;
-}
-
 // API response
 export interface Result<T = unknown> {
-  body: T;
-  head: head;
+  rstCd: string;
+  dta: T;
+  errMsg: string;
 }

@@ -1,6 +1,6 @@
 import { defHttp } from '@/utils/http/axios';
 
-import type { AuthInterface } from '@/service/auth/model/authModel';
+import type { AuthInterface } from '@/service/sample/model/sampleAuthModel';
 
 enum Api {
   auth = '/auth'

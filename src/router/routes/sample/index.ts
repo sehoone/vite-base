@@ -1,25 +1,22 @@
-// const DefaultLayout = async (): Promise<typeof import('*.vue')> =>
-//   await import(/* webpackChunkName: "sample" */ '@/layouts/sample/DefaultLayout.vue');
-
-const Reactive = async (): Promise<typeof import('*.vue')> =>
-  await import(/* webpackChunkName: "sample" */ '@/views/sample/Reactive.vue');
-const Computed = async (): Promise<typeof import('*.vue')> =>
-  await import(/* webpackChunkName: "sample" */ '@/views/sample/Computed.vue');
-const PropsParent = async (): Promise<typeof import('*.vue')> =>
-  await import(/* webpackChunkName: "sample" */ '@/views/sample/PropsParent.vue');
-const EmitsParent = async (): Promise<typeof import('*.vue')> =>
-  await import(/* webpackChunkName: "sample" */ '@/views/sample/EmitsParent.vue');
-const LoginPage = async (): Promise<typeof import('*.vue')> =>
-  await import(/* webpackChunkName: "sample" */ '@/views/sample/LoginPage.vue');
+const SampleLayout = () => import(/* webpackChunkName: "group-sample" */ '@/layouts/sample/SampleLayout.vue');
+const Reactive = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/Reactive.vue');
+const Computed = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/Computed.vue');
+const PropsParent = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/PropsParent.vue');
+const EmitsParent = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/EmitsParent.vue');
+const LoginPage = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/LoginPage.vue');
+const PostsList = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/PostsList.vue');
+const PostsDetail = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/PostsDetail.vue');
+const BridgeTest = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/BridgeTest.vue');
+const MultiLanguage = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/MultiLanguage.vue');
 
 export default {
   path: '/sample',
-  // component: DefaultLayout,
-  redirect: '/sample/helloWorld',
+  component: SampleLayout,
+  redirect: '/sample/reactive',
 
   children: [
     {
-      path: '/sample/helloWorld',
+      path: '/sample/reactive',
       component: Reactive,
       meta: {
         title: 'reactive'
@@ -33,14 +30,14 @@ export default {
       }
     },
     {
-      path: '/sample/propsParent',
+      path: '/sample/props-parent',
       component: PropsParent,
       meta: {
         title: 'propsParent'
       }
     },
     {
-      path: '/sample/emitsParent',
+      path: '/sample/emits-parent',
       component: EmitsParent,
       meta: {
         title: 'emitsParent'
@@ -48,10 +45,38 @@ export default {
     },
 
     {
-      path: '/sample/loginPage',
+      path: '/sample/login-page',
       component: LoginPage,
       meta: {
         title: 'loginPage'
+      }
+    },
+    {
+      path: '/sample/posts-list',
+      component: PostsList,
+      meta: {
+        title: 'postsList'
+      }
+    },
+    {
+      path: '/sample/posts-detail',
+      component: PostsDetail,
+      meta: {
+        title: 'postsDetail'
+      }
+    },
+    {
+      path: '/sample/bridge-test',
+      component: BridgeTest,
+      meta: {
+        title: 'bridgeTest'
+      }
+    },
+    {
+      path: '/sample/multi-language',
+      component: MultiLanguage,
+      meta: {
+        title: 'multiLanguage'
       }
     }
   ]

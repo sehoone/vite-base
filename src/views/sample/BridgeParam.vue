@@ -1,9 +1,9 @@
-<!-- <template>
+<template>
   <div>
     <slot></slot>
-    <div v-for="(param, index) of params" :key="index">
-      <v-text-field v-model="props.inputKey" :label="props.key" :placeholder="param.key"></v-text-field>
-      <v-text-field v-model="props.inputValue" :label="props.value" :placeholder="param.value"></v-text-field>
+    <div v-for="(param, index) of props.params" :key="index">
+      <v-text-field v-model="param.inputKey" :label="param.key" :placeholder="param.key"></v-text-field>
+      <v-text-field v-model="param.inputValue" :label="param.value" :placeholder="param.value"></v-text-field>
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ export type BridgeParams = {
 };
 const props = defineProps({
   params: {
-    type: Array,
+    type: Array as () => BridgeParams[],
     defalut: () => [],
     required: true
   }
@@ -33,4 +33,4 @@ export default {
   inheritAttrs: false,
   customOptions: {}
 };
-</script> -->
+</script>

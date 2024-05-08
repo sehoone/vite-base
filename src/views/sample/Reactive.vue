@@ -1,23 +1,29 @@
 <template>
-  <div class="home">
-    <v-card>
-      <v-card-text>
-        <p>ref: {{ person1.name }} {{ person1.age }}</p></v-card-text
-      >
-      <v-card-text
-        ><p>reactive: {{ person2.name }} {{ person2.age }}</p></v-card-text
-      >
-      <v-card-text
-        ><p>ref, reactive: {{ company1 }} {{ company2.company }}</p></v-card-text
-      >
-    </v-card>
+  <v-card>
+    <v-card-text>
+      <p>ref: {{ person1.name }} {{ person1.age }}</p></v-card-text
+    >
+    <v-card-text
+      ><p>reactive: {{ person2.name }} {{ person2.age }}</p></v-card-text
+    >
+    <v-card-text
+      ><p>ref, reactive: {{ company1 }} {{ company2.company }}</p></v-card-text
+    >
+  </v-card>
 
-    <v-btn color="primary" @click="handleClick">click next year</v-btn>
-  </div>
+  <v-btn color="primary" @click="handleClick">click next year</v-btn>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { logger } from '@/utils/logger';
+import { onMounted, onUnmounted, reactive, ref } from 'vue';
+
+onMounted(() => {
+  logger.debug('mounted sampleReactive');
+});
+onUnmounted(() => {
+  logger.debug('unmounted sampleReactive');
+});
 
 // composition api는 vue2에서 option api의 data option에 정의하는 반응형 데이터를 ref/reactive 로 정의하여 사용
 const person1 = ref({ name: 'sehoone1', age: 30 });

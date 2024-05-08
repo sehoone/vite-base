@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import type { HellowModel } from '@/service/sample/model/helloWorldModel';
-import { getHellowText } from '@/service/sample/api/helloWorld';
+import { getHellowText } from '@/service/sample/helloWorldApi';
 
 interface HelloWorldState {
   helloText: string;

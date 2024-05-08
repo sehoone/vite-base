@@ -6,10 +6,16 @@ import qs from 'qs';
 import { isFunction } from '@/utils/is';
 import { cloneDeep } from 'lodash-es';
 import { ContentTypeEnum, RequestEnum } from './enum/httpEnum';
+import { logger } from '@/utils/logger';
 
 /**
- * @description:  axios module
- * // TODO AXIOS life cycle 정의
+ * @description: axios module
+ * 1. axios instance 생성(BaseAxios)
+ * 2. beforeRequestHook: 요청보내기 전 처리
+ * 3. requestInterceptors: 요청 인터셉터
+ * 5. responseInterceptors: 응답 인터셉터
+ * 6. responseInterceptorsCatch: 5번에서 실패시 처리. 애러메세지 처리
+ * 7. transformResponseHook: 응답 데이터 처리
  */
 export class BaseAxios {
   private axiosInstance: AxiosInstance;
@@ -38,14 +44,14 @@ export class BaseAxios {
     if (!transform) {
       return;
     }
-    const { requestInterceptors, responseInterceptors } = transform;
+    const { requestInterceptors, responseInterceptors, responseInterceptorsCatch } = transform;
 
     // Request interceptor configuration processing
-    this.axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    this.axiosInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
       if (requestInterceptors && isFunction(requestInterceptors)) {
-        config = requestInterceptors(config, this.options);
+        config = await requestInterceptors(config, this.options);
       }
-      console.log('request interceptor');
+      logger.debug('request interceptor');
       return config;
     }, undefined);
 
@@ -56,6 +62,13 @@ export class BaseAxios {
       }
       return res;
     }, undefined);
+
+    // Response result interceptor error capture
+    responseInterceptorsCatch &&
+      isFunction(responseInterceptorsCatch) &&
+      this.axiosInstance.interceptors.response.use(undefined, (error) => {
+        return responseInterceptorsCatch(this.axiosInstance, error);
+      });
   }
 
   // support form-data
@@ -81,7 +94,7 @@ export class BaseAxios {
    * @description: axios http 통신(GET)
    */
   get<T = unknown>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
-    console.log('get');
+    logger.debug('get');
     return this.request({ ...config, method: 'GET' }, options);
   }
 
@@ -116,10 +129,9 @@ export class BaseAxios {
     const { requestOptions } = this.options;
     const opt: RequestOptions = Object.assign({}, requestOptions, options);
 
-    const { beforeRequestHook, transformRequestHook, requestCatchHook } = transform || {};
-    if (beforeRequestHook && isFunction(beforeRequestHook)) {
-      conf = beforeRequestHook(conf, opt);
-    }
+    const { beforeRequestHook = (conf: AxiosRequestConfig) => conf, transformResponseHook } = transform || {};
+
+    conf = beforeRequestHook(conf, opt);
     conf.requestOptions = opt;
     conf = this.supportFormData(conf);
 
@@ -128,11 +140,10 @@ export class BaseAxios {
       this.axiosInstance
         .request<unknown, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
-          if (transformRequestHook && isFunction(transformRequestHook)) {
+          if (transformResponseHook && isFunction(transformResponseHook)) {
             try {
               // 2-1 axois request 성공 후 처리(응답 데이터 처리 및 실패 응답처리)
-              const ret = transformRequestHook(res, opt);
-              console.log('ret', ret);
+              const ret = transformResponseHook(res, opt);
               resolve(ret);
             } catch (err) {
               reject(err || new Error('request error!'));
@@ -143,10 +154,11 @@ export class BaseAxios {
         })
         .catch((e: Error | AxiosError) => {
           // axois request 실패
-          if (requestCatchHook && isFunction(requestCatchHook)) {
-            reject(requestCatchHook(e, opt));
-            return;
-          }
+          // if (requestCatchHook && isFunction(requestCatchHook)) {
+          //   logger.debug('requestCatchHook2');
+          //   reject(requestCatchHook(e, opt));
+          //   return;
+          // }
           reject(e);
         });
     });

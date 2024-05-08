@@ -12,10 +12,15 @@
         <p>
           Im parent method handleStep2Next:
           {{ isCalledMethodNext }}
+        </p>
+        <p>
+          Im child username:
+          {{ username }}
         </p></v-card-text
       >
     </v-card>
     <emits-child @prev="handleStepPrev" @next="handleStepNext"></emits-child>
+    <label-input v-model:username="username" label="name"></label-input>
   </div>
 </template>
 
@@ -23,6 +28,7 @@
 import { reactive, computed, ref } from 'vue';
 import EmitsChild from '@/views/sample/EmitsChild.vue';
 import { logger } from '@/utils/logger';
+import LabelInput from '@/views/sample/LabelInput.vue';
 
 let person1 = reactive({
   name: 'sehoone1',
@@ -32,6 +38,8 @@ let person1 = reactive({
 
 let isCalledMethodPrev = ref(false);
 let isCalledMethodNext = ref(false);
+const username = ref('');
+
 const handleStepPrev = () => {
   logger.debug('call handleStepPrev');
   isCalledMethodPrev.value = !isCalledMethodPrev.value;
@@ -39,6 +47,7 @@ const handleStepPrev = () => {
 const handleStepNext = () => {
   logger.debug('call handleStepPrev');
   isCalledMethodNext.value = !isCalledMethodNext.value;
+  logger.debug('call username', username);
 };
 </script>
 

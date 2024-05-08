@@ -1,4 +1,15 @@
 /**
+ * @description: Request result set
+ */
+export enum ResultEnum {
+  SUCCESS = '200'
+}
+
+export enum ResultDtaEnum {
+  SUCCESS = '0000'
+}
+
+/**
  * @description: request method
  */
 export enum RequestEnum {

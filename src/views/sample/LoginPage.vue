@@ -3,16 +3,17 @@
     <h3>로그인 페이지</h3>
 
     <div>
-      <p>authStore.authInfo : {{ authStore.authInfo }}</p>
-      <p>authStore.isLodingAuthInfo: {{ authStore.isLodingAuthInfo }}</p>
-      <p>authStore.isDoneAuthInfo : {{ authStore.isDoneAuthInfo }}</p>
-      <p>authStore.errorAuthInfo : {{ authStore.errorAuthInfo }}</p>
+      <p>sampleAuthStore.authInfo : {{ sampleAuthStore.authInfo }}</p>
+      <p>authStore.isLodingAuthInfo: {{ sampleAuthStore.isLodingAuthInfo }}</p>
+      <p>authStore.isDoneAuthInfo : {{ sampleAuthStore.isDoneAuthInfo }}</p>
+      <p>authStore.errorAuthInfo : {{ sampleAuthStore.errorAuthInfo }}</p>
 
-      <div v-if="authStore.getIsLogin && authStore.getToken !== ''">
+      <div v-if="sampleAuthStore.getIsLogin && sampleAuthStore.getToken !== ''">
         <p>로그인 되었습니다.</p>
-        <p>userId : {{ authStore.authInfo.userId }}</p>
-        <p>name : {{ authStore.authInfo.name }}</p>
-        <p>lv : {{ authStore.authInfo.lv }}</p>
+
+        <p>userId : {{ sampleAuthStore.authInfo.userId }}</p>
+        <p>name : {{ sampleAuthStore.authInfo.name }}</p>
+        <p>lv : {{ sampleAuthStore.authInfo.lv }}</p>
         <div>
           <input type="button" value="LOGOUT" @click="onClickLogout" />
         </div>
@@ -20,16 +21,11 @@
 
       <div v-else>
         <form name="normal-form" @submit.prevent="onClickLogin">
+          <v-text-field :counter="10" label="UserId" hide-details required></v-text-field>
+
+          <v-text-field label="Password" persistent-hint type="input"></v-text-field>
           <p>
-            <label for="userId">userId</label>
-            <input type="text" name="userId" id="userId" />
-          </p>
-          <p>
-            <label for="password">password</label>
-            <input type="password" name="password" id="password" />
-          </p>
-          <p>
-            <input type="submit" value="LOGIN" :disabled="authStore.isLodingAuthInfo" />
+            <input type="submit" value="LOGIN" :disabled="sampleAuthStore.isLodingAuthInfo" />
           </p>
         </form>
       </div>
@@ -38,16 +34,16 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/service/auth/authModule';
+import { useSampleAuthStore } from '@/service/sample/sampleAuthModule';
 import { onMounted, onUnmounted } from 'vue';
 import { logger } from '@/utils/logger';
 
 /* request, prepare, on, cb, action */
 
-const authStore = useAuthStore();
+const sampleAuthStore = useSampleAuthStore();
 
 async function requestApiHttpAuth(): Promise<void> {
-  await authStore.actionHttpAuth({});
+  await sampleAuthStore.actionHttpAuth({});
 }
 
 function onClickLogin(): void {
@@ -61,7 +57,7 @@ function onClickLogin(): void {
 }
 function onClickLogout(): void {
   logger.debug('log out!!');
-  authStore.actionLogout();
+  sampleAuthStore.actionLogout();
 }
 
 onMounted(() => {

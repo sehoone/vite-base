@@ -1,14 +1,14 @@
-// import type { HttpResponseInterface } from '@/utils/common.interface';
-
 /**
  * @description: 인증 API
  * AuthInterface
  */
-export interface AuthInterface {
-  userId: string;
-  name: string;
-  lv: number;
-  token: string; // 토큰
+export interface AuthInfoInterface {
+  token: string; // 인증토큰
+  uuId: string; // UUID
+  appCode: string; // app코드. MIC
+  osKnd: string; // os종류. A: Android, I: iOS
+  osVer: string; // os버전
+  appVer: string; // app버젼
 }
 
 /**

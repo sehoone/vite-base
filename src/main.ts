@@ -1,5 +1,3 @@
-import './assets/main.css';
-
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 
@@ -11,16 +9,37 @@ import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
+import { aliases, mdi } from 'vuetify/iconsets/mdi';
+import '@mdi/font/css/materialdesignicons.css';
+
+import { setupI18n } from '@/locales/setupI18n';
 
 const vuetify = createVuetify({
   components,
-  directives
+  directives,
+  icons: {
+    defaultSet: 'mdi',
+    aliases,
+    sets: {
+      mdi
+    }
+  }
 });
 
 const app = createApp(App);
 
-app.use(createPinia());
-app.use(router);
-app.use(vuetify);
+async function bootstrap() {
+  app.use(createPinia());
+  app.use(router);
+  app.use(vuetify);
+  await setupI18n(app);
 
-app.mount('#app');
+  app.mount('#app');
+}
+bootstrap();
+// app.use(createPinia());
+// app.use(router);
+// app.use(vuetify);
+// setupI18n
+
+// app.mount('#app');

@@ -1,14 +1,8 @@
-// $flex Device dummy setup
-import type { FlexRespone } from '@/utils/hybrid/type/index';
-
-// WebToNative request, reponse type 정의
-export type DeviceInfoResponse = {
-  appVersion: string;
-  uuid: string;
-} & FlexRespone;
+import type { FlexRespone } from '../type';
+import type { DeviceInfoRequest, DeviceInfoResponse } from './device.type';
 
 // WebToNative interface 정의
 export default interface FlexDevice {
-  deviceInfo: () => Promise<DeviceInfoResponse>;
-  /* add function */
+  deviceInfo: (param: DeviceInfoRequest) => Promise<DeviceInfoResponse>;
+  exit: () => Promise<FlexRespone>;
 }

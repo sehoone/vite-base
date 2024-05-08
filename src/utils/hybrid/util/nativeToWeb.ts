@@ -1,17 +1,15 @@
-// $flex Device dummy setup
-import { FlexResponeCode } from '@/utils/hybrid/type/index';
-import type { UserAgentType } from '@/utils/hybrid/util/index';
+import type { CallBackFunction } from '.';
 
 // NativeToWeb interFace 구현부
-export const UtilNativeToWeb: UserAgentType = {
-  userAgent: () => {
+export const UtilNativeToWeb = {
+  webViewBack: (func: CallBackFunction) => {
+    window.dispatchEvent(new CustomEvent('webViewBack'));
     return {
-      userAgnet: navigator.userAgent,
       response: {
-        code: FlexResponeCode.OK,
+        code: 0,
         message: 'OK'
       }
     };
-  }
+  },
   /* add function */
 };

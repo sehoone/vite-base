@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div class="home">
     <v-select :items="bridgeList" v-model="selectedBridge"></v-select>
     <v-text-field v-model="selectedBridge" label="interfaceName" placeholder="interfaceName"></v-text-field>
@@ -23,10 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, reactive } from 'vue';
+import { ref, reactive } from 'vue';
 import BridgeParam, { type BridgeParams } from '@/views/sample/BridgeParam.vue';
-import flex from '@/utils/hybrid/index';
-import { DataTableHeader } from 'vuetify';
+// import flex from '@/utils/hybrid/index';
+// import { DataTableHeader } from 'vuetify';
 //import { FlexFunc } from 'flex-hybrid-app-scripts';
 
 const defaultParam: BridgeParams = {
@@ -34,6 +34,20 @@ const defaultParam: BridgeParams = {
   value: 'value',
   inputKey: '',
   inputValue: ''
+};
+
+type DataTableHeader = {
+  text: string;
+  value: string;
+  align?: 'start' | 'center' | 'end';
+  sortable?: boolean;
+  filterable?: boolean;
+  groupable?: boolean;
+  divider?: boolean;
+  class?: string | string[];
+  cellClass?: string | string[];
+  width?: string | number;
+  filter?: (value: any, search: string | null, item: any) => boolean;
 };
 
 let bridgeList: Array<DataTableHeader> = reactive([]);
@@ -46,25 +60,25 @@ let paramJson = reactive([defaultParam]);
 // eslint-disable-next-line
     let bridge: any; 
 
-onMounted(async () => {
-  bridge = await flex;
-  let keys = Object.getOwnPropertyNames(bridge);
-  keys.forEach((key: string) => {
-    if (
-      key != 'version' &&
-      key != 'isMobile' &&
-      key != 'isAndroid' &&
-      key != 'isiOS' &&
-      key != 'isScript' &&
-      key != 'device' &&
-      key != 'addEventListener' &&
-      key != 'option' &&
-      key != 'web'
-    ) {
-      bridgeList.push({ text: key, value: key });
-    }
-  });
-});
+// onMounted(async () => {
+//   bridge = await flex;
+//   let keys = Object.getOwnPropertyNames(bridge);
+//   keys.forEach((key: string) => {
+//     if (
+//       key != 'version' &&
+//       key != 'isMobile' &&
+//       key != 'isAndroid' &&
+//       key != 'isiOS' &&
+//       key != 'isScript' &&
+//       key != 'device' &&
+//       key != 'addEventListener' &&
+//       key != 'option' &&
+//       key != 'web'
+//     ) {
+//       bridgeList.push({ text: key, value: key });
+//     }
+//   });
+// });
 
 /**
  * 브릿지 호출
@@ -136,4 +150,4 @@ export default {
   inheritAttrs: false,
   customOptions: {}
 };
-</script> -->
+</script>

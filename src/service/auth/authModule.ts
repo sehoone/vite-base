@@ -1,30 +1,26 @@
 import { defineStore } from 'pinia';
 
-import { httpAuth } from '@/service/auth/authService';
-import type { AuthInterface } from '@/service/auth/model/authModel';
+import type { AuthInfoInterface } from '@/service/auth/model/authModel';
+import { getAppBridge } from '@/utils';
 
 interface authState {
-  authInfo: AuthInterface;
-  isLodingAuthInfo: boolean;
-  isDoneAuthInfo: boolean;
-  errorAuthInfo: string | null;
+  authInfo: AuthInfoInterface;
 }
 
-export const authInfoInit = {
-  userId: '',
-  name: '',
-  lv: 0,
-  token: '' // 토큰
+export const AuthInfoInit = {
+  token: '',
+  uuId: '',
+  appCode: '',
+  osKnd: '',
+  osVer: '',
+  appVer: ''
 };
 
 export const useAuthStore = defineStore({
   id: 'auth-store',
 
   state: (): authState => ({
-    authInfo: authInfoInit,
-    isLodingAuthInfo: false,
-    isDoneAuthInfo: false,
-    errorAuthInfo: null
+    authInfo: AuthInfoInit
   }),
 
   getters: {
@@ -36,36 +32,23 @@ export const useAuthStore = defineStore({
     },
     getToken(): string {
       return this.authInfo.token;
+    },
+    getAuthInfo(): AuthInfoInterface {
+      return this.authInfo;
     }
   },
   actions: {
-    async actionHttpAuth(fdata: any) {
-      localStorage.removeItem('TOKEN');
-      this.authInfo = authInfoInit;
-      this.isLodingAuthInfo = true;
-      this.isDoneAuthInfo = false;
-      this.errorAuthInfo = null;
-      try {
-        const res = await httpAuth(fdata);
-        this.authInfo = res;
-        localStorage.setItem('TOKEN', this.authInfo.token);
-        this.isLodingAuthInfo = false;
-        this.isDoneAuthInfo = true;
-        return res;
-      } catch (error) {
-        this.isLodingAuthInfo = false;
-        this.isDoneAuthInfo = false;
-        this.errorAuthInfo = '에러가 발생했습니다. #1';
-        return await Promise.reject(error);
-      }
-    },
+    async getAuthTokenAction() {
+      const appBridge = await getAppBridge();
+      const resAuthInfo = await appBridge.authInfo();
+      this.authInfo.token = resAuthInfo.token;
+      this.authInfo.uuId = resAuthInfo.uuId;
+      this.authInfo.appCode = resAuthInfo.appCode;
+      this.authInfo.osKnd = resAuthInfo.osKnd;
+      this.authInfo.osVer = resAuthInfo.osVer;
+      this.authInfo.appVer = resAuthInfo.appVer;
 
-    actionLogout() {
-      localStorage.removeItem('TOKEN');
-      this.authInfo = authInfoInit;
-      this.isLodingAuthInfo = false;
-      this.isDoneAuthInfo = true;
-      this.errorAuthInfo = null;
+      return resAuthInfo;
     }
   }
 });

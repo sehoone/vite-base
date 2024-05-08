@@ -2,7 +2,9 @@
   <div class="home">
     <v-card>
       <v-card-text>
-        <p><b>Im child</b></p>
+        <p>
+          <b>Im child {{ title }}</b>
+        </p>
         <p><b>props person1.name:</b>{{ person1.name }}</p>
         <p><b>props person1.age:</b>{{ person1.age }}</p>
         <p><b>props person1.computedNameLength:</b>{{ person1.computedNameLength }}</p></v-card-text
@@ -31,6 +33,10 @@ const props = defineProps({
   person1: {
     type: Object as () => person1Model,
     required: true
+  },
+  title: {
+    type: String,
+    default: '제목'
   }
 });
 

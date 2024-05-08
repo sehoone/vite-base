@@ -3,38 +3,69 @@ import type { AxiosResponse } from 'axios';
 import type { RequestOptions, Result } from './types/axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 import { BaseAxios } from './baseAxios';
-import { RequestEnum, ContentTypeEnum } from './enum/httpEnum';
+import { RequestEnum, ContentTypeEnum, ResultEnum } from './enum/httpEnum';
 import { isString } from '@/utils/is';
 import { deepMerge } from '@/utils';
 import { formatRequestDate } from './helper';
+import { useAuthStore } from '@/service/auth/authModule';
+import { logger } from '@/utils/logger';
+import { useI18n } from '@/composables/useI18n';
+// import { useMessageModal } from '@/composables/useMessageModal';
 
 /**
  * @description: AxiosTransform
  */
 const transform: AxiosTransform = {
   /**
-   * @description: transformRequestHook
+   * @description: transformResponseHook
    */
-  transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
+  transformResponseHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
+    logger.debug('transformResponseHook start');
+    const { t } = useI18n();
     const { isReturnNativeResponse } = options;
-    // 서버응답 그대로 처리
+    logger.debug('transformResponseHook ' + res);
+    // 서버응답 그대로 처리(axios 응답을 포함한 응답)
     if (isReturnNativeResponse) {
       return res;
     }
+    if (!res) {
+      // logger.debug(t('system.api.networkException'));
+      throw new Error(t('system.api.networkException'));
+    }
+    const data = res.data;
+    const { rstCd, dta } = data;
+    const hasSuccess = data && rstCd === ResultEnum.SUCCESS;
 
-    const { data } = res;
-    if (!data) {
-      // return '[HTTP] Request has no return value';
+    if (hasSuccess) {
+      return dta;
     }
 
-    const { head, body } = data;
+    // const { createErrorModal } = useMessageModal();
+    // createErrorModal(
+    //   {
+    //     title: t('system.api.errorMessage'),
+    //     footer: [
+    //       {
+    //         name: 'close',
+    //         label: 'Close',
+    //         disabled: false
+    //       }
+    //     ]
+    //   },
+    //   errMsg || t('system.api.networkException')
+    // );
     // TODO 실패 코드 응답 처리
-    console.log('header resultCode' + head.resultCode);
-
-    return body;
+    logger.debug('rstCd' + rstCd);
+    logger.debug('transformResponseHook end');
+    return data;
   },
 
+  /**
+   * @description: beforeRequestHook
+   * 요청보내기 전 처리.
+   */
   beforeRequestHook: (config, options) => {
+    logger.debug('beforeRequestHook start');
     const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, urlPrefix } = options;
 
     if (joinPrefix) {
@@ -75,16 +106,38 @@ const transform: AxiosTransform = {
         config.params = undefined;
       }
     }
-    console.log('beforeRequestHook');
+
+    logger.debug('beforeRequestHook end');
     return config;
   },
 
   /**
    * @description: requestInterceptors
    */
-  requestInterceptors: (config) => {
-    console.log('requestInterceptors start');
-    console.log('requestInterceptors end');
+  requestInterceptors: async (config, options) => {
+    logger.debug('requestInterceptors start');
+
+    // API인증정보 세팅. 인증정보는 브릿지를 통해서 가져옴
+    const authStore = useAuthStore();
+    let authInfo = authStore.getAuthInfo;
+    if ((config as any).requestOptions?.withToken == true) {
+      if (authInfo.token == '') {
+        const resAuthInfo = await authStore.getAuthTokenAction();
+        authInfo = resAuthInfo;
+      }
+      config.headers.Authorization = options.authenticationScheme
+        ? `${options.authenticationScheme} ${authInfo.token}`
+        : authInfo.token;
+
+      // TODO 인터페이스 정의서 보고 수정
+      config.headers['appCode'] = authInfo.appCode;
+      config.headers['UUID'] = authInfo.uuId;
+      config.headers['osKnd'] = authInfo.osKnd;
+      config.headers['osVer'] = authInfo.osVer;
+      config.headers['appVer'] = authInfo.appVer;
+    }
+
+    logger.debug('requestInterceptors end');
     return config;
   },
 
@@ -92,8 +145,8 @@ const transform: AxiosTransform = {
    * @description: responseInterceptors
    */
   responseInterceptors: (res: AxiosResponse<any>) => {
-    console.log('responseInterceptors start');
-    console.log('responseInterceptors end');
+    logger.debug('responseInterceptors start');
+    logger.debug('responseInterceptors end');
     return res;
   },
 
@@ -101,8 +154,50 @@ const transform: AxiosTransform = {
    * @description: responseInterceptorsCatch
    */
   responseInterceptorsCatch: (error: any) => {
-    console.log('responseInterceptorsCatch start' + error);
-    // TODO 실패응답 처리 추가
+    logger.debug('responseInterceptorsCatch start' + error);
+    // TODO 실패응답 처리. ex. http 실패응답. 401, 403, 404, 500 등
+    // const { t } = useI18n();
+    const { code, message } = error || {};
+    const err: string = error?.toString?.() ?? '';
+    // let errMessage = '';
+
+    try {
+      if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
+        // errMessage = t('system.api.apiTimeoutMessage');
+      }
+      if (err?.includes('Network Error')) {
+        // errMessage = t('system.api.networkExceptionMsg');
+      }
+
+      // TODO statue 별로 애러메세지 처리
+      // const { createErrorModal } = useMessageModal();
+      // createErrorModal(
+      //   {
+      //     title: t('system.api.errorMessage'),
+      //     footer: [
+      //       {
+      //         name: 'close',
+      //         label: 'Close',
+      //         disabled: false
+      //       }
+      //     ]
+      //   },
+      //   errMessage || t('system.api.networkException')
+      // );
+    } catch (error) {
+      throw new Error(error as unknown as string);
+    }
+    // alert('네트워크 오류 ' + error.message);
+    logger.debug('responseInterceptorsCatch end');
+    return Promise.reject(error);
+  },
+
+  requestCatchHook: (error: Error) => {
+    logger.debug('requestCatchHook start');
+    logger.debug('requestCatchHook end');
+    // alert('네트워크 오류 ' + error.message);
+    return Promise.reject(error);
+    // }(e: Error, options: RequestOptions) => Promise<unknown>;
   }
 };
 
@@ -113,6 +208,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
   return new BaseAxios(
     deepMerge(
       {
+        authenticationScheme: 'Bearer',
         timeout: 10 * 1000,
         headers: { 'Content-Type': ContentTypeEnum.JSON },
         transform,
@@ -126,7 +222,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           errorMessageMode: 'message',
           urlPrefix: 'api',
           joinTime: true,
-          ignoreCancelToken: true
+          withToken: true
         }
       },
       opt || {}

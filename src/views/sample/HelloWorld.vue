@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { logger } from '@/utils/logger';
-import { useHelloWorldStore } from '@/service/sample/module/helloWorld';
+import { useHelloWorldStore } from '@/service/sample/helloWorldModule';
 import { ref } from 'vue';
 
 const helloWorldStore = useHelloWorldStore();
