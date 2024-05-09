@@ -6,16 +6,16 @@
 
       <section>
         Page 2 Body
-        <div key="note1" class="fade-in-left">
+        <div key="note1" :ref="(el) => addElement(el as HTMLElement)" class="fade-in-left">
           <em>Note: This is enclosed in &lt;span&gt; to support transition</em>
         </div>
-        <div key="note2" class="fade-in-left">
+        <div key="note2" :ref="(el) => addElement(el as HTMLElement)" class="fade-in-left">
           <em>Note: This is enclosed in &lt;span&gt; to support transition</em>
         </div>
-        <div key="note3" class="fade-in-left">
+        <div key="note3" :ref="(el) => addElement(el as HTMLElement)" class="fade-in-left">
           <em>Note: This is enclosed in &lt;span&gt; to support transition</em>
         </div>
-        <div key="note4" class="fade-in-left">
+        <div key="note4" :ref="(el) => addElement(el as HTMLElement)" class="fade-in-left">
           <em>Note: This is enclosed in &lt;span&gt; to support transition</em>
         </div>
       </section>
@@ -23,24 +23,26 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import useUtility from '@/composables/useUtility';
+import { ref, onMounted } from 'vue';
 
-export default {
-  setup() {
-    // === Composables ===
-    const utility = useUtility(import.meta);
+// === Composables ===
+const utility = useUtility(import.meta);
 
-    return {
-      utility
-    };
-  },
-  mounted() {
-    console.log(`[${this.utility.currentFileName}::mounted()] Starting...`);
+console.log('[: ' + utility.currentFileName + ':mounted()] Starting...');
 
-    this.$refs.title.innerText = this.$options.__file.split('/').pop();
-  }
+const fadeElements = ref([] as HTMLElement[]);
+
+const addElement = (el: HTMLElement) => {
+  if (el) fadeElements.value.push(el as HTMLElement);
 };
+
+onMounted(() => {
+  fadeElements.value.forEach((element, index) => {
+    element.style.setProperty('--i', (index + 1).toString());
+  });
+});
 </script>
 
 <style scoped>
@@ -63,19 +65,7 @@ export default {
   visibility: hidden;
 }
 
-.fade-in-left:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.fade-in-left:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-.fade-in-left:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-.fade-in-left:nth-child(4) {
-  animation-delay: 0.3s;
+.fade-in-left {
+  animation-delay: calc(0.1s * (var(--i) - 1));
 }
 </style>
