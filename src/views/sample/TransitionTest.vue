@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { name, version } from '@/utils/constants/constants.js';
+import { name, version } from '@/utils/constants/constants';
 
 const getLink = (pageNo) => {
   // Note: pageNo 0 is the root page /
@@ -86,14 +86,14 @@ small {
 }
 
 .slide-fade-leave-active {
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-leave-to {
-  transform: translateY(100px);
+  transform: translateX(50px);
   opacity: 0;
 }
 .slide-fade-enter-from {
-  transform: translateY(20px);
+  transform: translateX(20px);
   opacity: 0;
 }
 </style>

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import useUtility from '@/composables/useUtility.js';
+import useUtility from '@/composables/useUtility';
 
 export default {
   setup() {

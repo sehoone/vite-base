@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, toRaw } from 'vue';
 import { useRoute } from 'vue-router';
-import useUtility from '@/composables/useUtility.js';
+import useUtility from '@/composables/useUtility';
 
 // === Composables ===
 const route = useRoute();
@@ -14,14 +14,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <span>
-    <h1>Page: Catch All</h1>
+  <div>
+    <span>
+      <h1>Page: Catch All</h1>
 
-    <div class="route-attributes" v-for="routeKey in Object.keys(toRaw(route))" :key="routeKey">
-      <strong>{{ routeKey }}</strong
-      >: {{ route[routeKey] }}
-    </div>
-  </span>
+      <div class="route-attributes" v-for="routeKey in Object.keys(toRaw(route))" :key="routeKey">
+        <strong>{{ routeKey }}</strong
+        >: {{ route[routeKey] }}
+      </div>
+    </span>
+  </div>
 </template>
 
 <style scoped>
