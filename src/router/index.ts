@@ -3,6 +3,7 @@ import type { RouteRecordRaw } from 'vue-router';
 
 import sample from '@/router/routes/sample';
 import transition from '@/router/routes/transition';
+import { setupRouterGuard } from './routerGuardConfig';
 const NotfoundView = () => import('@/views/sample/NotFoundView.vue');
 
 const routes: Array<RouteRecordRaw> = [
@@ -10,13 +11,23 @@ const routes: Array<RouteRecordRaw> = [
   transition,
   // routerMembers,
   // routerPosts,
-  {
-    path: '/',
-    redirect: '/sample/reactive',
-    meta: {
-      title: 'HomeMain'
-    }
-  },
+  // {
+  //   path: '/',
+  //   component: () => import('@/views/sample/TransitionTest.vue'),
+  //   redirect: '/transition/page1',
+  //   children: [
+  //     sample,
+  //     transition
+  //     // Add other child routes here
+  //   ]
+  // },
+  // {
+  //   path: '/',
+  //   redirect: '/sample/reactive',
+  //   meta: {
+  //     title: 'HomeMain'
+  //   }
+  // },
   // {
   //   path: '/',
   //   // Note: Must specify a component to remove warning of No matching path
@@ -60,6 +71,6 @@ const router = createRouter({
 });
 
 // 라우터 가드(router before/after) setup
-// setupRouterGuard(router)
+setupRouterGuard(router);
 
 export default router;
