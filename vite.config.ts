@@ -24,5 +24,6 @@ export default defineConfig({
         secure: false
       }
     }
-  }
+  },
+  base: process.env.WEB_BASE || '/'
 });
