@@ -22,7 +22,7 @@ server.get('/apiList', (req, res) => {
 
 const db = require('./dummy/posts.json');
 server.post('/api/search-posts', (req, res) => {
-  let results = JSON.parse(JSON.stringify(db.searchPosts)); // get all posts
+  const results = JSON.parse(JSON.stringify(db.searchPosts)); // get all posts
   if (req.body.author) {
     results.dta.posts = results.dta.posts.filter((post) => post.author === req.body.author); // filter by author
   }

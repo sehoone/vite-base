@@ -13,6 +13,9 @@
     </v-card>
 
     <v-btn color="primary" @click="handleClick">click next year</v-btn>
+    <div class="center">
+      <v-progress-circular color="primary" indeterminate></v-progress-circular>
+    </div>
   </div>
 </template>
 
@@ -52,3 +55,12 @@ export default {
   customOptions: {}
 };
 </script>
+
+<style scoped>
+.center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
