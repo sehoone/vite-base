@@ -10,6 +10,7 @@ const middlewares = jsonServer.defaults();
 
 // Set default middlewares (logger, static, cors and no-cache)
 server.use(middlewares);
+server.use(jsonServer.bodyParser);
 
 // Add custom routes before JSON Server router
 server.get('/echo', (req, res) => {
@@ -17,6 +18,25 @@ server.get('/echo', (req, res) => {
 });
 server.get('/apiList', (req, res) => {
   res.send(apiList);
+});
+
+const db = require('./dummy/posts.json');
+server.post('/api/search-posts', (req, res) => {
+  let results = JSON.parse(JSON.stringify(db.searchPosts)); // get all posts
+  if (req.body.author) {
+    results.dta.posts = results.dta.posts.filter((post) => post.author === req.body.author); // filter by author
+  }
+  if (req.body.title) {
+    results.dta.posts = results.dta.posts.filter((post) => post.title === req.body.title); // filter by title
+  }
+
+  // Pagination
+  const page = req.body.page || 1;
+  const limit = req.body.limit || 10;
+  const offset = (page - 1) * limit;
+  results.dta.posts = results.dta.posts.slice(offset, offset + limit);
+
+  res.jsonp(results);
 });
 
 const apis = {
@@ -32,7 +52,7 @@ apiList.forEach((x) => {
 });
 // To handle POST, PUT and PATCH you need to use a body-parser
 // You can use the one used by JSON Server
-server.use(jsonServer.bodyParser);
+// server.use(jsonServer.bodyParser);
 
 // Use default router
 server.use(router);
