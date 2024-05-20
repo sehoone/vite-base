@@ -1,28 +1,30 @@
 <template>
-  <v-card>
-    <v-card-text>
-      <p>정적값 common.okText: {{ t('common.okText') }}</p></v-card-text
-    >
-    <v-card-text
-      ><p>정적값 common.closeText: {{ t('common.closeText') }}</p></v-card-text
-    >
-    <v-card-text
-      ><p>정적값 routes.login: {{ t('routes.basic.login') }}</p></v-card-text
-    >
-    <v-card-text
-      ><p>동적값 Welcome, {name}!: {{ welcomeMessage }}</p></v-card-text
-    >
-  </v-card>
+  <div>
+    <v-card>
+      <v-card-text>
+        <p>정적값 common.okText: {{ t('common.okText') }}</p></v-card-text
+      >
+      <v-card-text
+        ><p>정적값 common.closeText: {{ t('common.closeText') }}</p></v-card-text
+      >
+      <v-card-text
+        ><p>정적값 routes.login: {{ t('routes.basic.login') }}</p></v-card-text
+      >
+      <v-card-text
+        ><p>동적값 Welcome, {name}!: {{ welcomeMessage }}</p></v-card-text
+      >
+    </v-card>
 
-  <br />
-  <v-col class="py-2" cols="12">
-    <v-select
-      :items="localeList"
-      v-model="selectedLocale"
-      label="Select Role"
-      @update:modelValue="updateLocale"
-    ></v-select>
-  </v-col>
+    <br />
+    <v-col class="py-2" cols="12">
+      <v-select
+        :items="localeList"
+        v-model="selectedLocale"
+        label="Select Role"
+        @update:modelValue="updateLocale"
+      ></v-select>
+    </v-col>
+  </div>
 </template>
 
 <script setup lang="ts">
