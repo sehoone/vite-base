@@ -34,3 +34,26 @@ npm config ls -l
 ```sh
 npm config set prefix "{$압축 푼 파일경로}/lib/node_modules"
 ```
+
+# SSH접속시 ID/PW없이 접속방법
+- 빌드서버에서 배포 대상서버로 접속할떄, 플러그인이나 에이전트가 없을경우 SSH로 접속해서 처리해야할 수 있음
+- 배포 스크립트에 ID/PW 없이 접속하는 방법에 대한 설명
+
+### 1. 빌드서버(client)
+- ssh 키 생성(ssh키가 없는경우 생성). 옵션을 통해서 디폴트 ssh키가 아닌 특정경로에도 생성가능. ex. ssh-keygen -f ~/sshtest 
+```shell
+ssh-keygen
+```
+
+### 2. 배포서버(배포 대상 서버)
+- ssh 인증키 등록. 1번에서 생성한 공개키(id_rsa.pub) 를 해당 파일에 추가. 추가할떄는 한줄로 입력하고 추가하고 싶다면 다음라인에 추가한다
+```shell
+vi ~/.ssh/authorized_keys
+```
+
+### 3. SSH접속
+- SSH접속 명령어를 통해서 접속한다. 명령어는 {접속하려는사용자ID}@{배포대상서버IP} 이다. 
+- 1번에서 특정경로에 생성한 key 파일로 접속하고자 한다면 i옵션을 통해서 접속. ssh -i ~/sshtest/id_rsa user@111.111.111.111
+```shell
+ssh user@111.111.111.111
+```
