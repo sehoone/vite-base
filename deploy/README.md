@@ -57,3 +57,17 @@ vi ~/.ssh/authorized_keys
 ```shell
 ssh user@111.111.111.111
 ```
+
+# 젠킨스 빌드 shell
+
+```shell
+#!/bin/bash
+
+# set node binary
+export PATH=/home/pmsdev/sehoon-test/download/node-v20.12.0-linux-x64-glibc-217/bin:$PATH
+
+# build project
+cd demo-project/
+pnpm install
+pnpm build-only:dev
+```
