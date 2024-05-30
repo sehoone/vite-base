@@ -18,7 +18,25 @@
 import { ref, watch, nextTick } from 'vue';
 import SampleAppBarLayout from './SampleAppBarLayout.vue';
 import { isBack } from '@/router/routerGuardConfig';
+// import 'vuetify/styles';
+import { VContainer, VMain, VApp } from 'vuetify/components';
+// import { createVuetify } from 'vuetify';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
+// import { aliases, mdi } from 'vuetify/iconsets/mdi';
+// import '@mdi/font/css/materialdesignicons.css';
 
+// const vuetify = createVuetify({
+//   components,
+//   directives,
+//   icons: {
+//     defaultSet: 'mdi',
+//     aliases,
+//     sets: {
+//       mdi
+//     }
+//   }
+// });
 const transitionName = ref('slide-left');
 
 watch(isBack, () => {

@@ -21,6 +21,15 @@
 <script setup lang="ts">
 import { logger } from '@/utils/logger';
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
+import {
+  VAppBar,
+  VAppBarNavIcon,
+  VAppBarTitle,
+  VNavigationDrawer,
+  VList,
+  VListItem,
+  VListItemTitle
+} from 'vuetify/components';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
