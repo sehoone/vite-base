@@ -8,6 +8,8 @@ const PostsList = () => import(/* webpackChunkName: "group-sample" */ '@/views/s
 const PostsDetail = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/PostsDetail.vue');
 const BridgeTest = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/BridgeTest.vue');
 const MultiLanguage = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/MultiLanguage.vue');
+const ScrollBehavior1 = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/ScrollBehavior1.vue');
+const ScrollBehavior2 = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/ScrollBehavior2.vue');
 
 export default {
   path: '/sample',
@@ -77,6 +79,20 @@ export default {
       component: MultiLanguage,
       meta: {
         title: 'multiLanguage'
+      }
+    },
+    {
+      path: '/sample/scroll-behavior1',
+      component: ScrollBehavior1,
+      meta: {
+        title: 'scrollBehavior1'
+      }
+    },
+    {
+      path: '/sample/scroll-behavior2',
+      component: ScrollBehavior2,
+      meta: {
+        title: 'scrollBehavior2'
       }
     }
   ]

@@ -3,7 +3,6 @@ import type { RouteRecordRaw } from 'vue-router';
 
 import sample from '@/router/routes/sample';
 import transition from '@/router/routes/transition';
-import { setupRouterGuard } from './routerGuardConfig';
 const NotfoundView = () => import('@/views/sample/NotFoundView.vue');
 
 const routes: Array<RouteRecordRaw> = [
@@ -67,10 +66,26 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(savedPosition);
+        }, 7000);
+      });
+    } else if (to.hash) {
+      return {
+        selector: to.hash,
+        behavior: 'smooth'
+      };
+    } else {
+      return { x: 0, y: 0, behavior: 'smooth' };
+    }
+  }
 });
 
 // 라우터 가드(router before/after) setup
-setupRouterGuard(router);
+// setupRouterGuard(router);
 
 export default router;
