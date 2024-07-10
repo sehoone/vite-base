@@ -10,6 +10,7 @@ const BridgeTest = () => import(/* webpackChunkName: "group-sample" */ '@/views/
 const MultiLanguage = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/MultiLanguage.vue');
 const ScrollBehavior1 = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/ScrollBehavior1.vue');
 const ScrollBehavior2 = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/ScrollBehavior2.vue');
+const InputTest = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/InputTest.vue');
 
 export default {
   path: '/sample',
@@ -93,6 +94,13 @@ export default {
       component: ScrollBehavior2,
       meta: {
         title: 'scrollBehavior2'
+      }
+    },
+    {
+      path: '/sample/input-test',
+      component: InputTest,
+      meta: {
+        title: 'inputTest'
       }
     }
   ]
