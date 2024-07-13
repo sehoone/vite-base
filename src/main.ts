@@ -11,6 +11,8 @@ import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import '@mdi/font/css/materialdesignicons.css';
+import './assets/scss/guide.scss';
+import './assets/scss/style.scss';
 
 import { setupI18n } from '@/locales/setupI18n';
 
