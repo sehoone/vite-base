@@ -95,11 +95,12 @@ watch(activeElement, (el) => {
   activeEl.value = el;
 });
 
+const modalId = `${randomString}Modal`;
 // 모달 상태를 감시하여 상태를 store에 추가/제거
 watch(
   () => props.modelValue,
   (newValue) => {
-    if (newValue === true) {
+    if (newValue) {
       // show 모달 정보 store에 추가
       if (!commonStore.getShowedModals.some((modal) => modal.modalId === modalId)) {
         const showedModal = {
@@ -111,10 +112,10 @@ watch(
       // show 모달 정보 store에서 제거
       commonStore.removeShowedModal(modalId);
     }
-  }
+  },
+  { immediate: true }
 );
 
-const modalId = `${randomString}Modal`;
 onUnmounted(() => {
   // show 모달 정보 store에서 제거. 화면이동을 통해서 모달을 닫지 못하고 이동할경우 store에서 제거
   commonStore.removeShowedModal(modalId);
