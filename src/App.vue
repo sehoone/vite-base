@@ -7,8 +7,10 @@ import { logger } from './utils/logger';
 import { EmulatorDevice } from './utils/hybrid/emulator/';
 import { useRouter } from 'vue-router';
 import { loadNativeToWebBridge } from './utils';
+import { useCommonStore } from './service/locale copy/commonModule';
 
 const router = useRouter();
+const commonStore = useCommonStore();
 
 onMounted(() => {
   logger.debug('mounted app');
@@ -38,7 +40,7 @@ function loadEmulWebToNativeBridge() {
 }
 function checkEnvironment() {
   const userAgent = window.navigator.userAgent.toLowerCase();
-  if (/tmonyGo/i.test(userAgent)) {
+  if (/customAppName/i.test(userAgent)) {
     return 'app';
   } else {
     return 'pc';
@@ -51,6 +53,13 @@ function checkEnvironment() {
 }
 function webViewBack() {
   logger.debug('call webview back');
+
+  // 모달이 떠있으면 화면 뒤로가기 막기
+  if (!commonStore.isEmptyShowedModals) {
+    commonStore.popShowedModal();
+    return;
+  }
+
   if ('/sample/reactive' == router.currentRoute.value.path) {
     logger.debug('is last page');
   } else {

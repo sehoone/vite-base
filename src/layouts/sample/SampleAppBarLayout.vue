@@ -88,6 +88,11 @@ const items = reactive([
     icon: 'mdi-history',
     text: 'multi-language',
     link: '/sample/multi-language'
+  },
+  {
+    icon: 'mdi-history',
+    text: 'back-modal',
+    link: '/sample/back-modal'
   }
 ]);
 </script>

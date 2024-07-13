@@ -11,6 +11,7 @@ const MultiLanguage = () => import(/* webpackChunkName: "group-sample" */ '@/vie
 const ScrollBehavior1 = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/ScrollBehavior1.vue');
 const ScrollBehavior2 = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/ScrollBehavior2.vue');
 const InputTest = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/InputTest.vue');
+const BackModal = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/BackModal.vue');
 
 export default {
   path: '/sample',
@@ -101,6 +102,13 @@ export default {
       component: InputTest,
       meta: {
         title: 'inputTest'
+      }
+    },
+    {
+      path: '/sample/back-modal',
+      component: BackModal,
+      meta: {
+        title: 'backModal'
       }
     }
   ]
