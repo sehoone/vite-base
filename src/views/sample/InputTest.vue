@@ -29,8 +29,9 @@
       </div>
     </v-card>
     <v-card>
-      <!-- 유효한숫자만 입력 가능하도록 설정 -->
-      <input type="text" v-model="inputNum" @input="validateInput" />
+      <!-- 유효한숫자만 입력 가능하도록 설정. 
+       input type number로 해도 되지만 0001 과 같은 유효하지 않는 숫자는 그대로 노출됨 -->
+      <input type="text" v-model="inputNum" @input="validateInputNumber" />
     </v-card>
   </div>
 </template>
@@ -75,7 +76,12 @@ const handleFocus = async (event: FocusEvent) => {
   }
 };
 
-const validateInput = (event: Event) => {
+/**
+ * 입력 값이 숫자인지 확인하고, 숫자가 아닌 문자는 제거.
+ * watch를 사용하면 model만 업데이트 되고 사용자한테는 0001과 같은 유효하지 않은 숫자가 그대로 보임
+ * @param event
+ */
+const validateInputNumber = (event: Event) => {
   const input = event.target as HTMLInputElement;
   // 숫자만 포함된 문자열로 입력 값을 대체합니다.
   let value = input.value.replace(/\D/g, '');
