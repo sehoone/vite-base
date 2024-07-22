@@ -28,6 +28,10 @@
         ></v-text-field>
       </div>
     </v-card>
+    <v-card>
+      <!-- 유효한숫자만 입력 가능하도록 설정 -->
+      <input type="text" v-model="inputNum" @input="validateInput" />
+    </v-card>
   </div>
 </template>
 
@@ -41,6 +45,7 @@ const input3 = ref();
 const onClickCallKeypad = () => {
   // console.log('Keypad is Call');
 };
+const inputNum = ref('0');
 
 const programmaticFocusChange = ref(false);
 
@@ -68,6 +73,18 @@ const handleFocus = async (event: FocusEvent) => {
   if (event.target instanceof HTMLElement) {
     event.target.blur();
   }
+};
+
+const validateInput = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  // 숫자만 포함된 문자열로 입력 값을 대체합니다.
+  let value = input.value.replace(/\D/g, '');
+  // 입력 값이 숫자인 경우, parseInt를 사용하여 앞에 붙은 0을 제거합니다.
+  // 그리고 다시 문자열로 변환하여 v-model에 반영합니다.
+  if (value) {
+    value = String(parseInt(value, 10));
+  }
+  inputNum.value = value;
 };
 </script>
 
