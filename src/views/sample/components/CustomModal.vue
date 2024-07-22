@@ -95,6 +95,7 @@ watch(activeElement, (el) => {
   activeEl.value = el;
 });
 
+const isShowModal = ref(false);
 const modalId = `${randomString}Modal`;
 // 모달 상태를 감시하여 상태를 store에 추가/제거
 watch(
@@ -112,6 +113,7 @@ watch(
       // show 모달 정보 store에서 제거
       commonStore.removeShowedModal(modalId);
     }
+    isShowModal.value = newValue;
   },
   { immediate: true }
 );
@@ -126,7 +128,11 @@ watch(
   () => commonStore.getShowedModals,
   () => {
     console.log('watch commonStore.getShowedModals ', commonStore.getShowedModals);
-    if (!commonStore.getShowedModals.some((modal) => modal.modalId === modalId)) {
+    if (
+      isShowModal.value == true &&
+      props.modelValue == true &&
+      !commonStore.getShowedModals.some((modal) => modal.modalId === modalId)
+    ) {
       closeModal();
     }
   },
