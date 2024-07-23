@@ -12,6 +12,7 @@ const ScrollBehavior1 = () => import(/* webpackChunkName: "group-sample" */ '@/v
 const ScrollBehavior2 = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/ScrollBehavior2.vue');
 const InputTest = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/InputTest.vue');
 const BackModal = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/BackModal.vue');
+const Skeleton = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/Skeleton.vue');
 
 export default {
   path: '/sample',
@@ -109,6 +110,13 @@ export default {
       component: BackModal,
       meta: {
         title: 'backModal'
+      }
+    },
+    {
+      path: '/sample/skeleton',
+      component: Skeleton,
+      meta: {
+        title: 'skeleton'
       }
     }
   ]
