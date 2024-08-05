@@ -35,6 +35,11 @@ npm config ls -l
 npm config set prefix "{$압축 푼 파일경로}/lib/node_modules"
 ```
 
+- 전역 npm registry 설정
+```sh
+npm config set registry https://your-registry-url/
+```
+
 # SSH접속시 ID/PW없이 접속방법
 - 빌드서버에서 배포 대상서버로 접속할떄, 플러그인이나 에이전트가 없을경우 SSH로 접속해서 처리해야할 수 있음
 - 배포 스크립트에 ID/PW 없이 접속하는 방법에 대한 설명
@@ -52,11 +57,14 @@ vi ~/.ssh/authorized_keys
 ```
 
 ### 3. SSH접속
-- SSH접속 명령어를 통해서 접속한다. 명령어는 {접속하려는사용자ID}@{배포대상서버IP} 이다. 
 - 1번에서 특정경로에 생성한 key 파일로 접속하고자 한다면 i옵션을 통해서 접속. ssh -i ~/sshtest/id_rsa user@111.111.111.111
 ```shell
 ssh user@111.111.111.111
 ```
+
+### 4. 파일업로드
+- 원격 서버의 배포 디렉토리로 이동. scp $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
+- scp -r /path/to/local/directory username@remote_host:/path/to/remote/directory
 
 # 젠킨스 빌드 shell
 
