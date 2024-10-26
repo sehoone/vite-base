@@ -1,6 +1,7 @@
-import { isObject } from '@/utils/is';
+import { isMobileApp, isObject } from '@/utils/is';
 import type AppBridge from '@/utils/hybrid/index';
 import { UtilNativeToWeb } from './hybrid/util/nativeToWeb';
+import { EmulatorDevice } from './hybrid/emulator/device';
 /**
  * Add the object as a parameter to the URL
  * @param baseUrl url
@@ -79,4 +80,21 @@ export function getRandomId() {
     randomstring += chars.substring(rnum, rnum + 1);
   }
   return randomstring;
+}
+
+/**
+ * 개발용 브릿지 애뮬레이터 로드
+ * PC환경일때만 로드. PC로 개발을 진행할때 브릿지를 사용하기 위함
+ * @returns (window as any)['$flex']
+ */
+export function loadEmulWebToNativeBridge() {
+  // mobile app이 아닌 pc환경에서만 로드
+  if (!isMobileApp()) {
+    const emulatorBridge = { ...EmulatorDevice };
+    Object.defineProperty(window, '$flex', { value: {}, writable: true, enumerable: true, configurable: true });
+    if (typeof emulatorBridge === 'object') {
+      Object.assign((window as any)['$flex'], emulatorBridge);
+    }
+    return (window as any)['$flex'];
+  }
 }

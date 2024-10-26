@@ -16,3 +16,15 @@ export function isString(val: unknown): val is string {
 export function isFunction(val: unknown): val is Function {
   return typeof val === 'function';
 }
+
+/**
+ * 모바일APP 여부
+ * @returns {boolean}
+ */
+export function isMobileApp(): boolean {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  if (/appName/i.test(userAgent)) {
+    return true;
+  }
+  return false;
+}

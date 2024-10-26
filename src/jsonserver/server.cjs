@@ -50,6 +50,14 @@ apiList.forEach((x) => {
     });
   }
 });
+// apiList.forEach((x) => {
+//   if (apis[x.name]) {
+//     server[x.method](`/prefix-path${x.url}`, (req, res) => {
+//       res.send(JSON.stringify(apis[x.name]));
+//     });
+//   }
+// });
+
 // To handle POST, PUT and PATCH you need to use a body-parser
 // You can use the one used by JSON Server
 // server.use(jsonServer.bodyParser);
