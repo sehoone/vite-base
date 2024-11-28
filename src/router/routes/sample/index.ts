@@ -13,6 +13,9 @@ const ScrollBehavior2 = () => import(/* webpackChunkName: "group-sample" */ '@/v
 const InputTest = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/InputTest.vue');
 const BackModal = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/BackModal.vue');
 const Skeleton = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/Skeleton.vue');
+const SimpleForm = () => import(/* webpackChunkName: "group-sample" */ '@/views/sample/form/SimpleForm.vue');
+const MultipleStepForm = () =>
+  import(/* webpackChunkName: "group-sample" */ '@/views/sample/form/MultipleStepForm.vue');
 
 export default {
   path: '/sample',
@@ -117,6 +120,20 @@ export default {
       component: Skeleton,
       meta: {
         title: 'skeleton'
+      }
+    },
+    {
+      path: '/sample/simple-form',
+      component: SimpleForm,
+      meta: {
+        title: 'simpleForm'
+      }
+    },
+    {
+      path: '/sample/multiple-step-form',
+      component: MultipleStepForm,
+      meta: {
+        title: 'multipleStepForm'
       }
     }
   ]
